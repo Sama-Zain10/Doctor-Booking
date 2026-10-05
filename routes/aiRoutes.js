@@ -1,11 +1,7 @@
-import express from 'express';
-import axios from 'axios';
-import { chatWithAI } from '../controllers/aiController.js';
-import {protectP} from "../middleware/auth.js";
+import { Router } from "express";
 
-const router = express.Router();
+const router = Router();
 
-
-router.post('/chat',protectP, chatWithAI);
+// router.post("/suggest-speciality", protect, suggestSpeciality);
 
 export default router;

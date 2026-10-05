@@ -1,5 +1,5 @@
 import Admin from "../models/admin.js";
-import Dr from "../models/dr.js";
+import Dr from "../models/doctor.js";
 
 
 export const VDrsBySpecialtyAdmin = async (req, res, next) => {

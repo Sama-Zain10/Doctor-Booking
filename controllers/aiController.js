@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Patient from '../models/patient.js';
+import Patient from '../models/user.js';
 const aiUrl = process.env.AI_SERVICE_URL 
 export const chatWithAI = async (req, res, next) => {
     try {
@@ -11,7 +11,6 @@ export const chatWithAI = async (req, res, next) => {
             console.log(" Error: No Patient ID found in request");
             return res.status(400).json({ success: false, message: "User not authenticated" });
         }
-
         const patient = await Patient.findById(patientId);
         
 

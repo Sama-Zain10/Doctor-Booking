@@ -1,31 +1,25 @@
 import nodemailer from "nodemailer";
-import {config} from "dotenv";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-config();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const LOGO_PATH = path.join(__dirname, "../assets/logo.png");
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,     
+  requireTLS: true,
+  family: 4,          
+  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+});
 
-
-
-export async function sendEmail(email, subject, htmlContent) {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: subject,
-      html: htmlContent,
-    });
-
-    console.log(`Email sent to ${email}`);
-  } catch (error) {
-    console.log("Email Error:", error);
-     console.log(error);
-  throw error;
-  }
+export default async function sendEmail({ to, subject, text, html }) {
+  await transporter.sendMail({
+    from: `"نبضة" <${process.env.EMAIL_USER}>`,
+    to,
+    subject,
+    text,
+    html,
+    attachments: [{ filename: "logo.png", path: LOGO_PATH, cid: "logo" }],
+  });
 }
