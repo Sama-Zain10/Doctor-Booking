@@ -98,3 +98,25 @@ export const changePassword = async (req, res, next) => {
     next(err);
   }
 };
+export const getProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return next({ message: "User not found", statusCode: 404 });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        id: user._id,
+        full_name: user.full_name,
+        email: user.email,
+        phone: user.phone ?? null,
+        gender: user.gender ?? null,
+        governorate: user.governorate ?? null,
+        role: user.role,
+        created_at: user.created_at,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
