@@ -11,10 +11,15 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     phone: { type: String, trim: true },
-    password: { type: String, required: true, select: false },
+    password: {
+      type: String,
+      select: false,
+      required: function () {
+        return !this.google_id;
+      },
+    },
     google_id: { type: String, unique: true, sparse: true },
     gender: { type: String, enum: ["male", "female"] },
-    isEmailVerified: { type: Boolean, default: false },
     governorate: { type: String, trim: true },
     role: {
       type: String,

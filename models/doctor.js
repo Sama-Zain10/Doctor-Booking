@@ -1,48 +1,19 @@
 import mongoose from "mongoose";
 
-const drSchema = new mongoose.Schema({
-  
-  name: {
-    type: String,
-    required: true,
-    minlength: 4
+const doctorSchema = new mongoose.Schema(
+  {
+    user_id:       { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
+    speciality_id: { type: mongoose.Schema.Types.ObjectId, ref: "Speciality", required: true },
+    bio:           { type: String, trim: true },
+    education_and_qualifications: { type: String, trim: true },
+    clinic_address: { type: String, trim: true },
+    consultation_fee: { type: Number, required: true, min: 0 },
+    rating_average:   { type: Number, default: 0, min: 0, max: 5 },
+    rating_count:     { type: Number, default: 0, min: 0 }, 
   },
+  { timestamps: true }
+);
 
-  specialty: {
-     type: String,
-     enum:["Dentistry","Cardiology", "Dermatology", "Endocrinology", "Gastroenterology", 
-    "Neurology", "Obstetrics & Gynecology", "Ophthalmology", 
-    "Orthopedics", "ENT", "Pediatrics", "Psychiatry", 
-    "Pulmonology", "Urology", "Rheumatology"],
-      required: true },
-      fee: {
-    type: Number,
-    required: true,
-    min: 50,
-    max: 500
-  },
+doctorSchema.index({ speciality_id: 1 });
 
-  day: { 
-    type: String,
-    enum: ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday","friday"],
-     required: true,
-     lowercase: true
-    },
-
-  hour: {
-     type: String,
-      required: true },
-
-  maxBooking: {
-     type: Number,
-      default: 20 },
-
-  isActive: { 
-    type: Boolean,
-     default: true }
-}, { timestamps: true });
-
-
-const Dr = mongoose.model("Dr", drSchema);
-
-export default Dr;
+export default mongoose.model("Doctor", doctorSchema);
