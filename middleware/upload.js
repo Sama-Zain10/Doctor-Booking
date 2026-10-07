@@ -1,6 +1,6 @@
 import multer from "multer";
 
-const ALLOWED = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED = ["image/jpeg", "image/png", "image/webp","image/jfif"];
 
 const upload = multer({
   storage: multer.memoryStorage(),
