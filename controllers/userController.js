@@ -37,6 +37,7 @@ export const updateProfile = async (req, res, next) => {
         gender: user.gender,
         governorate: user.governorate,
         role: user.role,
+        avatar: user.avatar ?? null,
       },
     });
   } catch (err) {
@@ -115,6 +116,7 @@ export const getProfile = async (req, res, next) => {
         governorate: user.governorate ?? null,
         role: user.role,
         created_at: user.created_at,
+        avatar: user.avatar ?? null,
       },
     });
   } catch (err) {
