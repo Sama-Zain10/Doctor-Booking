@@ -5,6 +5,7 @@ import {
   changePasswordSchema,
 } from "../validators/userValidator.js";
 import BlacklistedToken from "../models/blacklistedToken.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const updateProfile = async (req, res, next) => {
   try {
@@ -115,6 +116,48 @@ export const getProfile = async (req, res, next) => {
         role: user.role,
         created_at: user.created_at,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const uploadBuffer = (buffer, userId) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: "nabda/avatars",
+        public_id: `user_${userId}_${Date.now()}`,
+        resource_type: "image",
+        transformation: [{ width: 400, height: 400, crop: "fill", gravity: "face" }],
+      },
+      (err, result) => (err ? reject(err) : resolve(result))
+    );
+    stream.end(buffer);
+  });
+
+export const updateAvatar = async (req, res, next) => {
+  try {
+    if (!req.file) return next({ message: "avatar image is required", statusCode: 400 });
+
+    const user = await User.findById(req.user.id).select("+avatar_public_id");
+    if (!user) return next({ message: "User not found", statusCode: 404 });
+
+    const result = await uploadBuffer(req.file.buffer, user._id);
+
+    if (user.avatar_public_id) {
+      cloudinary.uploader.destroy(user.avatar_public_id).catch(() => {});
+    }
+
+    await User.updateOne(
+      { _id: user._id },
+      { avatar: result.secure_url, avatar_public_id: result.public_id }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Avatar updated successfully",
+      data: { avatar_url: result.secure_url },
     });
   } catch (err) {
     next(err);

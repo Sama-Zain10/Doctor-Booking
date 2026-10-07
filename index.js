@@ -2,7 +2,6 @@ import "dotenv/config";
 import cors from "cors";
 import morgan from "morgan";
 import express from "express";
-
 import connectDB from "./config/db.js";
 import authRouter from "./routes/authRouter.js";
 import doctorRouter from "./routes/doctorRouter.js";

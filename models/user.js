@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema(
         return !this.google_id;
       },
     },
+    avatar: { type: String, default: null },
+    avatar_public_id: { type: String, select: false },
     google_id: { type: String, unique: true, sparse: true },
     gender: { type: String, enum: ["male", "female"] },
     governorate: { type: String, trim: true },
