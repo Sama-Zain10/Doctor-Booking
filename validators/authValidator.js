@@ -12,6 +12,7 @@ export const registerSchema = Joi.object({
 export const loginSchema = Joi.object({
   email:    Joi.string().email().required(),
   password: Joi.string().required(),
+  role:     Joi.string().valid("patient", "doctor", "admin"),
 });
 
 export const emailSchema = Joi.object({
