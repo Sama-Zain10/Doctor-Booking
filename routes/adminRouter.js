@@ -12,6 +12,10 @@ import{createManySpecialities,createSpeciality,getAllSpecialities,
 } from"../controllers/specialtyController.js";
 
 
+import{sendEditRequest
+} from"../controllers/editsreq_sentmessagescontroller.js";
+
+
 const router = Router();
 
 //only admin:
@@ -27,6 +31,11 @@ router.patch("/activateallspec",updateExistingSpecialitiesStatus)
 
 router.post("/adminaddmanydrs",createManyDoctors)
 router.post("/adddoctor",createDoctor)
+
+
+router.post("/requestedits",sendEditRequest)
+
+
 
 router.get("/adminviewdr",admingetDoctors)
 

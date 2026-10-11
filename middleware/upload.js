@@ -24,3 +24,38 @@ export const handleAvatarUpload = (req, res, next) => {
     next({ message: err.message, statusCode: err.statusCode || 400 });
   });
 };
+
+
+
+
+
+const documentUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== "application/pdf") {
+      const err = new Error("Only PDF files are allowed");
+      err.statusCode = 400;
+      return cb(err);
+    }
+    cb(null, true);
+  },
+}).single("document");
+
+export const handleDocumentUpload = (req, res, next) => {
+  documentUpload(req, res, (err) => {
+    if (!err) return next();
+
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return next({
+        message: "PDF must be 10MB or less",
+        statusCode: 400,
+      });
+    }
+
+    next({
+      message: err.message,
+      statusCode: err.statusCode || 400,
+    });
+  });
+};

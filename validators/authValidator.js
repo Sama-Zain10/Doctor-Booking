@@ -12,7 +12,6 @@ export const registerSchema = Joi.object({
 export const loginSchema = Joi.object({
   email:    Joi.string().email().required(),
   password: Joi.string().required(),
-  role:     Joi.string().valid("patient", "doctor", "admin"),
 });
 
 export const emailSchema = Joi.object({
@@ -31,4 +30,14 @@ export const resetPasswordSchema = Joi.object({
     .valid(Joi.ref("new_password"))
     .required()
     .messages({ "any.only": "Passwords do not match" }),
+});
+
+
+
+export const createAdminSchema = Joi.object({
+  full_name: Joi.string().min(2).max(50).required(),
+
+  email: Joi.string().email().required(),
+
+  password: Joi.string().min(8).max(64).required(),
 });

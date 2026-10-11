@@ -50,7 +50,14 @@ const doctorSchema = new mongoose.Schema(
       latitude:  { type: Number, min: -90, max: 90 },
       longitude: { type: Number, min: -180, max: 180 },
     },
-    is_active: { type: Boolean, default: true },                   
+    is_active: { type: Boolean, default: true },         
+    
+    approval_status: {
+  type: String,
+  enum: ["pending", "accepted", "cancelled","require_edits"],
+  default: "pending"
+}
+
   },
   { timestamps: true }
 );
