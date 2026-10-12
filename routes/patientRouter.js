@@ -2,7 +2,7 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import { protect } from "../middleware/authMiddleware.js";
 import {getacceptedDoctors,getDoctorById,getDoctoravailability
-} from "../controllers/drcontroller.js";
+} from "../controllers/doctorController.js";
 import{getSpecialitiesPatients} from"../controllers/specialtyController.js";
 
 const router = Router();

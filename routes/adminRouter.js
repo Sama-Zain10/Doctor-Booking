@@ -2,7 +2,7 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import { protect } from "../middleware/authMiddleware.js";
 import {createDoctor,
-} from "../controllers/drcontroller.js";
+} from "../controllers/doctorController.js";
 import {createAdmin,admingetDoctors,createManyDoctors,
     acceptDoctor,cancellDoctor,activateDoctor,deactivateDoctor
 } from "../controllers/adminController.js";

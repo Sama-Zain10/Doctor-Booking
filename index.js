@@ -4,7 +4,8 @@ import morgan from "morgan";
 import express from "express";
 import connectDB from "./config/db.js";
 import authRouter from "./routes/authRouter.js";
-import doctorRouter from "./routes/doctorRouter.js";
+import adminRouter from "./routes/adminRouter.js";
+import patientRouter from "./routes/patientRouter.js";
 import appointmentRouter from "./routes/appointmentRoute.js";
 import userRouter from "./routes/userRouter.js";
 import AIRouter from "./routes/aiRoutes.js";
@@ -28,10 +29,21 @@ app.use((err, req, res, next) => {
 
 // ---------- Routes ----------
 app.use("/api/auth", authRouter);
-app.use("/api/doctors", doctorRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api/appointments", appointmentRouter);
 app.use("/api/user", userRouter);
 app.use("/api/ai", AIRouter);
+app.use("/api/patient", patientRouter);
+
+
+
+
+app.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "Index works"
+  });
+});
 
 // ---------- 404 + Error handler ----------
 app.use((req, res, next) => {
