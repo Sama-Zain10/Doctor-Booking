@@ -3,7 +3,7 @@ import Joi from "joi";
 export const registerSchema = Joi.object({
   full_name:   Joi.string().min(2).max(50).required(),
   email:       Joi.string().email().required(),
-  phone:       Joi.string().pattern(/^01[0125][0-9]{8}$/).required(),
+  phone:       Joi.string().pattern(/^01[0125][0-9]{8}$/),
   password:    Joi.string().min(8).max(64).required(),
   gender:      Joi.string().valid("male", "female"),
   governorate: Joi.string().max(50),
