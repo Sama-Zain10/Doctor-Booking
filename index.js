@@ -9,6 +9,7 @@ import patientRouter from "./routes/patientRouter.js";
 import appointmentRouter from "./routes/appointmentRoute.js";
 import userRouter from "./routes/userRouter.js";
 import AIRouter from "./routes/aiRoutes.js";
+import insuranceRouter from "./routes/insuranceRoutes.js";
 import { ErrorHandler } from "./utils/ErrorHandler.js";
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/appointments", appointmentRouter);
 app.use("/api/user", userRouter);
 app.use("/api/ai", AIRouter);
 app.use("/api/patient", patientRouter);
+app.use("/api/insurance", insuranceRouter);
 
 
 
